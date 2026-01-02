@@ -23,3 +23,26 @@ class AC(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.model_name}"
+    
+
+
+
+class Review(models.Model):
+    name = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=200)
+
+    STAR_CHOICES = (
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    )
+
+    star = models.IntegerField(choices=STAR_CHOICES)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.product_name} ({self.star}⭐)"
