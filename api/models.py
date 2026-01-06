@@ -1,6 +1,14 @@
 from django.db import models
 
 # Create your models here.
+
+STAR_CHOICES = (
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    )
 class AC(models.Model):
     CONDITION_CHOICES = [
         ('new', 'New'),
@@ -46,3 +54,59 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.product_name} ({self.star}⭐)"
+
+
+class Maintainence(models.Model):
+    icon = models.CharField(max_length =255,null=True,blank=True)
+    description = models.TextField()
+    price = models.CharField(max_length=255)
+    star = models.IntegerField(choices=STAR_CHOICES)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.description
+
+
+
+class Reviews(models.Model):
+    name = models.CharField(max_length=255)
+    product_name = models.CharField(max_length=255,null=True)
+    review = models.TextField()
+    rating = models.IntegerField(choices=STAR_CHOICES)
+    image = models.ImageField(upload_to='review/images')
+    is_active = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f'{self.name}--{self.review}'
+
+
+class Author(models.Model):
+    username = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.username
+class Book(models.Model):
+
+    book_name = models.CharField(max_length=255)
+    price = models.IntegerField()
+    publish_date = models.DateField()
+    author = models.ForeignKey(Author,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.author.username}-{self.book_name}'
+
+
+
+
+
+
+class Profile(models.Model):
+    profile_name = models.OneToOneField(Author,on_delete=models.CASCADE)
+    phone = models.IntegerField(max_length=20)
+
+
+    def __str__(self):
+        return self.profile_name.username
+        
+    

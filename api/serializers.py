@@ -23,3 +23,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             'email',
             'created_at',
         ]
+
+
+

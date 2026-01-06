@@ -1,6 +1,6 @@
 from django.shortcuts import render 
 from rest_framework import generics
-from .models import AC
+from .models import *
 from .serializers import ACSerializer
 from .filters import ACFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -8,6 +8,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Review
 from .serializers import ReviewSerializer
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 # Create your views here.
@@ -26,3 +29,44 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['product_name', 'star']
+
+
+
+
+
+class MaintenanceAPIView(APIView):
+    def get(self, request):
+        try:
+            response = list(Maintainence.objects.filter(is_active = True).values())
+            print(response)
+            return Response(
+                {"data": response, "status": 200},
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class ReviewsAPIView(APIView):
+    def get(self, request):
+        try:
+            print()
+            response = list(Reviews.objects.filter(is_active = True).values())
+            print(response,"sssssssssss")
+            return Response(
+                {"data": response, "status": 200},
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            print(e)
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
