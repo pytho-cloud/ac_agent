@@ -19,6 +19,7 @@ class AC(models.Model):
         ('split', 'Split'),
         ('window', 'Window'),
     ]
+    ton = models.CharField(max_length=255,null=True)
 
     brand = models.CharField(max_length=100)
     model_name = models.CharField(max_length=100)
@@ -28,6 +29,7 @@ class AC(models.Model):
     energy_rating = models.IntegerField()  # 3,4,5
     price = models.IntegerField()
     is_available = models.BooleanField(default=True)
+    image = models.ImageField(upload_to="ac-images/",null=True)
 
     def __str__(self):
         return f"{self.brand} {self.model_name}"
@@ -81,32 +83,13 @@ class Reviews(models.Model):
         return f'{self.name}--{self.review}'
 
 
-class Author(models.Model):
-    username = models.CharField(max_length=255)
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15, blank=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username
-class Book(models.Model):
-
-    book_name = models.CharField(max_length=255)
-    price = models.IntegerField()
-    publish_date = models.DateField()
-    author = models.ForeignKey(Author,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.author.username}-{self.book_name}'
-
-
-
-
-
-
-class Profile(models.Model):
-    profile_name = models.OneToOneField(Author,on_delete=models.CASCADE)
-    phone = models.IntegerField(max_length=20)
-
-
-    def __str__(self):
-        return self.profile_name.username
-        
-    
+        return self.name

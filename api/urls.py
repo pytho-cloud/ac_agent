@@ -14,5 +14,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('get-maintainence/', MaintenanceAPIView.as_view()),
     path('reviews/', ReviewsAPIView.as_view()),
+      path('contact', ContactAPIView.as_view(), name='contact-api'),
 
 ]

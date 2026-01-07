@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import AC ,Review
+from .models import *
 
 class ACSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,3 +26,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = "__all__"

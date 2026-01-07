@@ -14,6 +14,7 @@ class ACFilter(django_filters.FilterSet):
             'ac_type',
             'capacity',
             'energy_rating',
+            'ton'
         ]
 
 
