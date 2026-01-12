@@ -28,6 +28,7 @@ class AC(models.Model):
     capacity = models.DecimalField(max_digits=3, decimal_places=1)  # 1.5
     energy_rating = models.IntegerField()  # 3,4,5
     price = models.IntegerField()
+    description  = models.TextField(null= True)
     is_available = models.BooleanField(default=True)
     image = models.ImageField(upload_to="ac-images/",null=True)
 

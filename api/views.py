@@ -14,13 +14,36 @@ from rest_framework import status
 
 
 # Create your views here.
-class ACListAPIView(generics.ListAPIView):
-    queryset = AC.objects.filter(is_available=True)  # ✅ use is_available
+from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from .models import AC
+from .serializers import ACSerializer
+from .filters import ACFilter
+from rest_framework.generics import ListAPIView
+
+class ACListAPIView(ListAPIView):
     serializer_class = ACSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_class = ACFilter
-    search_fields = ['brand', 'model_name']
-    ordering_fields = ['price', 'energy_rating']
+
+    def get_queryset(self):
+        qs = AC.objects.filter(is_available=True)
+
+        brand = self.request.query_params.get("brand")
+        model = self.request.query_params.get("model_name")
+        condition = self.request.query_params.get("condition")
+        ac_type = self.request.query_params.get("ac_type")
+
+        if brand:
+            qs = qs.filter(brand=brand)
+        if model:
+            qs = qs.filter(model_name=model)
+        if condition:
+            qs = qs.filter(condition=condition)
+        if ac_type:
+            qs = qs.filter(ac_type=ac_type)
+
+        return qs
+
 
 
 
@@ -81,3 +104,27 @@ class ContactAPIView(APIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
+class ACView(APIView):
+
+    def get(self, request):
+
+        brands = AC.objects.values_list("brand", flat=True).distinct()
+        models = AC.objects.values_list("model_name", flat=True).distinct()
+        conditions = AC.objects.values_list("condition", flat=True).distinct()
+        ac_types = AC.objects.values_list("ac_type", flat=True).distinct()
+
+        return Response({
+            "brand": list(brands),
+            "model_name": list(models),
+            "condition": list(conditions),
+            "ac_type": list(ac_types),
+        })
+
+
+
+        
+
