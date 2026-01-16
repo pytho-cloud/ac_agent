@@ -31,6 +31,7 @@ class AC(models.Model):
     description  = models.TextField(null= True)
     is_available = models.BooleanField(default=True)
     image = models.ImageField(upload_to="ac-images/",null=True)
+    is_home_active = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.brand} {self.model_name}"

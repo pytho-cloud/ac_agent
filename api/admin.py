@@ -5,7 +5,7 @@ from .models import *
 
 @admin.register(AC)
 class ACAdmin(admin.ModelAdmin):
-    list_display = ('brand', 'model_name', 'condition', 'ac_type', 'capacity', 'energy_rating', 'price', 'is_available')
+    list_display = ('brand', 'model_name', 'condition', 'ac_type', 'capacity', 'energy_rating', 'price', 'is_available',"is_home_active")
     list_filter = ('condition', 'ac_type', 'brand', 'energy_rating')
     search_fields = ('brand', 'model_name')
 

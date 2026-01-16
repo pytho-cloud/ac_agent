@@ -22,27 +22,27 @@ from .serializers import ACSerializer
 from .filters import ACFilter
 from rest_framework.generics import ListAPIView
 
-class ACListAPIView(ListAPIView):
+class ACListAPIView(APIView):
     serializer_class = ACSerializer
 
-    def get_queryset(self):
-        qs = AC.objects.filter(is_available=True)
+    def get(self, request):
+        new_ac = AC.objects.filter(
+            is_available=True,
+            is_home_active=True,
+            condition="new"
+        ).values()
 
-        brand = self.request.query_params.get("brand")
-        model = self.request.query_params.get("model_name")
-        condition = self.request.query_params.get("condition")
-        ac_type = self.request.query_params.get("ac_type")
+        refurbish_ac = AC.objects.filter(
+            is_available=True,
+            is_home_active=True,
+            condition="refurbished"
+        ).values()
 
-        if brand:
-            qs = qs.filter(brand=brand)
-        if model:
-            qs = qs.filter(model_name=model)
-        if condition:
-            qs = qs.filter(condition=condition)
-        if ac_type:
-            qs = qs.filter(ac_type=ac_type)
+        return Response({
+            "data_new": new_ac,
+            "data_refurbish": refurbish_ac
+        })
 
-        return qs
 
 
 

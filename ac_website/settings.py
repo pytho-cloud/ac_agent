@@ -30,8 +30,9 @@ CORS_ALLOWED_ORIGINS = [
       "http://localhost:3000",
      "http://192.168.0.162:3000"
 ]
-
+ALLOWED_HOSTS = ["*"]
 # Application definition
+
 
 INSTALLED_APPS = [
  "jazzmin",      
