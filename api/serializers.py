@@ -7,24 +7,10 @@ class ACSerializer(serializers.ModelSerializer):
         model = AC
         fields = "__all__"
 
-
-
-
-
-class ReviewSerializer(serializers.ModelSerializer):
+class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
-        fields = [
-            'id',
-            'name',
-            'product_name',
-            'star',
-            'phone_number',
-            'email',
-            'created_at',
-        ]
-
-
+        model = Reviews
+        fields = "__all__"
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,7 +22,6 @@ class BookServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookService
         fields = "__all__"
-
 
 
 class ProductSellSerializer(serializers.ModelSerializer):
