@@ -34,7 +34,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 INSTALLED_APPS = [
     # 'material.admin',  <- REMOVE this line
-    'unfold',           # optional, or remove if you want default admin
+    # 'unfold',     # optional, or remove if you want default admin
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
