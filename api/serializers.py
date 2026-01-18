@@ -30,3 +30,23 @@ class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = "__all__"
+
+
+class BookServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookService
+        fields = "__all__"
+
+
+
+class ProductSellSerializer(serializers.ModelSerializer):
+
+    class Meta :
+        model = ProductSell
+        fields = '__all__'
+
+
+class ProductSellImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSellImages
+        fields = "__all__"

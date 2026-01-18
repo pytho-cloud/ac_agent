@@ -1,5 +1,5 @@
 from django.db import models
-
+from multiselectfield import MultiSelectField
 # Create your models here.
 
 STAR_CHOICES = (
@@ -16,15 +16,23 @@ class AC(models.Model):
     ]
 
     TYPE_CHOICES = [
-        ('split', 'Split'),
-        ('window', 'Window'),
+        ('window', 'Window AC'),
+        ('split', 'Split AC'),
+        ('four_way_cassette', '4 Way Cassette AC'),
+        ('one_way_cassette', 'One Way Cassette AC'),
+        ('tower', 'Tower AC'),
+        ('ductable', 'Ductable AC'),
+        ('hvac', 'HVAC'),
+        ('vrf', 'VRF System'),
+        ('vrv', 'VRV System'),
     ]
+
     ton = models.CharField(max_length=255,null=True)
 
     brand = models.CharField(max_length=100)
     model_name = models.CharField(max_length=100)
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES)
-    ac_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    ac_types = MultiSelectField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
     capacity = models.DecimalField(max_digits=3, decimal_places=1)  # 1.5
     energy_rating = models.IntegerField()  # 3,4,5
     price = models.IntegerField()
@@ -95,3 +103,38 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+
+class BookService(models.Model):
+
+    full_name = models.TextField()
+    phone_number = models.CharField(max_length=255)
+    email = models.EmailField(null=True)
+    service_requirements = models.TextField()
+
+
+
+    def __str__(self):
+        return f"{self.full_name}--{self.phone_number}"
+
+
+    
+class ProductSell(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+    product_name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    price = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.name} - {self.product_name}'
+
+
+
+class ProductSellImages(models.Model):
+    product = models.ForeignKey(ProductSell, on_delete=models.CASCADE, related_name="images")
+    images = models.ImageField(upload_to="product-sell/")
+    images_created_at = models.DateTimeField(auto_now_add=True)

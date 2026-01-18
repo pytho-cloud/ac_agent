@@ -28,20 +28,19 @@ DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
       "http://localhost:3000",
-     "http://192.168.0.162:3000"
+     "http://192.168.0.108:3000"
 ]
 ALLOWED_HOSTS = ["*"]
 # Application definition
-
-
 INSTALLED_APPS = [
- "jazzmin",      
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    # 'material.admin',  <- REMOVE this line
+    'unfold',           # optional, or remove if you want default admin
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 
     'rest_framework',
     'django_filters',
@@ -49,6 +48,11 @@ INSTALLED_APPS = [
 
     'api',   # your app
 ]
+
+
+
+
+
 
 
 MIDDLEWARE = [

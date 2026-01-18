@@ -5,9 +5,12 @@ from .models import *
 
 @admin.register(AC)
 class ACAdmin(admin.ModelAdmin):
-    list_display = ('brand', 'model_name', 'condition', 'ac_type', 'capacity', 'energy_rating', 'price', 'is_available',"is_home_active")
-    list_filter = ('condition', 'ac_type', 'brand', 'energy_rating')
-    search_fields = ('brand', 'model_name')
+    list_display = (
+        'brand', 'model_name', 'ac_types',
+        'capacity', 'energy_rating', 'price',
+        'is_available', 'is_home_active'
+    )
+
 
 
 # @admin.register(Review)
@@ -59,3 +62,21 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     search_fields = ('name', 'email', 'message')
     readonly_fields = ('created_at',)
+
+
+# @admin.register(ProductSell)
+# class ProductSellAdmin(admin.ModelAdmin):
+#     list_display = ('name' , 'address', 'product_name' , 'phone_number','created_at')
+    
+
+class ProductSellImagesInline(admin.TabularInline):
+    model = ProductSellImages
+    extra = 1
+
+
+@admin.register(ProductSell)
+class ProductSellAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "product_name", "phone_number", "price", "created_at")
+    search_fields = ("name", "product_name", "phone_number")
+    list_filter = ("created_at",)
+    inlines = [ProductSellImagesInline]

@@ -11,7 +11,7 @@ class ACFilter(django_filters.FilterSet):
         fields = [
             'condition',
             'brand',
-            'ac_type',
+            'ac_types',
             'capacity',
             'energy_rating',
             'ton'
