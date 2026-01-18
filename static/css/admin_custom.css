@@ -1,0 +1,13 @@
+/* Circular logo like WhatsApp DP */
+.brand-image,
+.login-logo img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+}
+
+/* Slight spacing fix */
+.brand-link .brand-image {
+    margin-left: 5px;
+}

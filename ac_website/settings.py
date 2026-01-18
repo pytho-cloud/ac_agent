@@ -50,8 +50,93 @@ INSTALLED_APPS = [
 ]
 
 
+JAZZMIN_SETTINGS = {
+
+    # -------------------
+    # Top Branding
+    # -------------------
+    "site_title": "CoolTech Admin",
+    "site_header": "CoolTech Services",
+    "site_brand": "CoolTech Admin ",
+    "site_logo": "images/logoo.png",  # put logo in static/images/
+
+    "login_logo": None,
+    "login_logo_dark": None,
+    "site_icon": None,
+
+    # -------------------
+    # Welcome Text
+    # -------------------
+    "welcome_sign": "Welcome to CoolTech Services",
+    "copyright": "CoolTech Services",
+
+    # -------------------
+    # Search
+    # -------------------
+    "search_model": ["auth.User"],
+
+    # -------------------
+    # User Avatar
+    # -------------------
+    "user_avatar": None,
+
+    # -------------------
+    # Top Menu Links
+    # -------------------
+    "topmenu_links": [
+        {"name": "Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"model": "auth.User"},
+    ],
+
+    # -------------------
+    # Sidebar
+    # -------------------
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+
+    # -------------------
+    # Icons (FontAwesome)
+    # -------------------
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+
+        "home.Property": "fas fa-building",
+        "home.Appoinment": "fas fa-calendar-check",
+    },
+
+    # -------------------
+    # UI Tweaks
+    # -------------------
+    "related_modal_active": True,
+    "custom_css": "css/admin_custom.css",
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": True,
+}
 
 
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    "dark_mode_theme": "",
+
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+    "accent": "accent-flatly",
+
+    "brand_colour": "navbar-success",
+    "button_classes": {
+        "primary": "btn-success",
+        "secondary": "btn-outline-secondary",
+        "success": "btn-success",
+        "danger": "btn-danger",
+        "warning": "btn-warning",
+        "info": "btn-info",
+    },
+}
 
 
 
