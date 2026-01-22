@@ -15,7 +15,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('get-maintainence/', MaintenanceAPIView.as_view()),
     path('reviews/', ReviewsAPIView.as_view()),
-    path('contact', ContactAPIView.as_view(), name='contact-api'),
+    path("contact/", ContactAPIView.as_view(), name="contact-api"),
     path('ac-filter-list/', ACView.as_view(), name='ac-list'),
     path('post-enquiry/', BookServiceView.as_view()),
     path('products-acs/', ProductACAPIView.as_view()),

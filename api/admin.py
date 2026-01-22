@@ -3,8 +3,22 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 
+# @admin.register(AC)
+# class ACAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'brand', 'model_name', 'ac_types',
+#         'capacity', 'energy_rating', 'price',
+#         'is_available', 'is_home_active'
+#     )
+
+class ACImageInline(admin.TabularInline):
+    model = ACImage
+    extra = 3
+
+
 @admin.register(AC)
 class ACAdmin(admin.ModelAdmin):
+    inlines = [ACImageInline]
     list_display = (
         'brand', 'model_name', 'ac_types',
         'capacity', 'energy_rating', 'price',
@@ -35,15 +49,10 @@ class ACAdmin(admin.ModelAdmin):
 
 
 @admin.register(Maintainence)
-class Maintanence(admin.ModelAdmin):
-
-    list_display =(
-        'description',
-        'price',
-        'star',
-        'is_active'
-    )
-
+class MaintainenceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'is_active')  # Update to match current model fields
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
 
 @admin.register(Reviews)
 class Reviews(admin.ModelAdmin):
@@ -58,10 +67,10 @@ class Reviews(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'message', 'created_at')
-    list_filter = ('created_at',)
-    search_fields = ('name', 'email', 'message')
-    readonly_fields = ('created_at',)
+    list_display = ("name", "email", "phone", "created_at")
+    search_fields = ("name", "email", "phone")
+    list_filter = ("created_at",)
+    ordering = ("-created_at",)
 
 
 # @admin.register(ProductSell)
@@ -80,3 +89,5 @@ class ProductSellAdmin(admin.ModelAdmin):
     search_fields = ("name", "product_name", "phone_number")
     list_filter = ("created_at",)
     inlines = [ProductSellImagesInline]
+
+

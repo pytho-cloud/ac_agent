@@ -21,26 +21,16 @@ from .serializers import ReviewsSerializer
 
 
 class ACListAPIView(APIView):
-    serializer_class = ACSerializer
-
     def get(self, request):
-        path  = request.path
-        print("this is my path ",path)
-        new_ac = AC.objects.filter(
-            is_available=True,
-            is_home_active=True,
-            condition="new"
-        ).values()
+        new_ac = AC.objects.filter(is_available=True, is_home_active=True, condition="new")
+        refurbish_ac = AC.objects.filter(is_available=True, is_home_active=True, condition="refurbished")
 
-        refurbish_ac = AC.objects.filter(
-            is_available=True,
-            is_home_active=True,
-            condition="refurbished"
-        ).values()
+        new_serializer = ACSerializer(new_ac, many=True, context={'request': request})
+        refurbish_serializer = ACSerializer(refurbish_ac, many=True, context={'request': request})
 
         return Response({
-            "data_new": new_ac,
-            "data_refurbish": refurbish_ac
+            "data_new": new_serializer.data,
+            "data_refurbish": refurbish_serializer.data
         })
 
 
@@ -81,23 +71,14 @@ class ProductACAPIView(APIView):
 
 
 
-
 class MaintenanceAPIView(APIView):
     def get(self, request):
-        try:
-            response = list(Maintainence.objects.filter(is_active = True).values())
-            print(response)
-            return Response(
-                {"data": response, "status": 200},
-                status=status.HTTP_200_OK
-            )
-
-        except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
+        services = Maintainence.objects.filter(is_active=True)
+        serializer = MaintainenceSerializer(services, many=True)
+        return Response({
+            "data": serializer.data,
+            "status": 200
+        }, status=status.HTTP_200_OK)
 
 class ReviewsAPIView(APIView):
     parser_classes = [MultiPartParser, FormParser]
@@ -167,15 +148,11 @@ class ReviewsAPIView(APIView):
 
 
 class ContactAPIView(APIView):
-
     def post(self, request):
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                {"message": "Contact form submitted successfully"},
-                status=status.HTTP_201_CREATED
-            )
+            return Response({"message": "Contact form submitted successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 

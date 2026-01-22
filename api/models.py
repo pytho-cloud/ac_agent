@@ -46,6 +46,17 @@ class AC(models.Model):
     
 
 
+class ACImage(models.Model):
+    ac = models.ForeignKey(
+        AC,
+        related_name="images",
+        on_delete=models.CASCADE
+    )
+    image = models.ImageField(upload_to="ac-images/")
+
+    def __str__(self):
+        return f"Image for {self.ac.model_name}"
+
 
 class Review(models.Model):
     name = models.CharField(max_length=100)
@@ -68,15 +79,17 @@ class Review(models.Model):
         return f"{self.name} - {self.product_name} ({self.star}⭐)"
 
 
+# models.py
+
 class Maintainence(models.Model):
-    icon = models.CharField(max_length =255,null=True,blank=True)
-    description = models.TextField()
-    price = models.CharField(max_length=255)
-    star = models.IntegerField(choices=STAR_CHOICES)
-    is_active = models.BooleanField(default=True)
+    title = models.CharField(max_length=100)              # Name of the service
+    description = models.TextField()                      # Description
+    icon = models.CharField(max_length=50)               # Store FontAwesome icon name like "faSnowflake"
+    is_active = models.BooleanField(default=True)        # Whether to show this service
 
     def __str__(self):
-        return self.description
+        return self.title
+
 
 
 
