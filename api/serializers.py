@@ -8,7 +8,8 @@ class ACImageSerializer(serializers.ModelSerializer):
         fields = ['image']
 
 class ACSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(use_url=True)  # <- this makes DRF return full URL
+    # image = serializers.ImageField(use_url=True)
+    images = ACImageSerializer(many=True, read_only=True)# <- this makes DRF return full URL
 
     class Meta:
         model = AC
