@@ -82,10 +82,10 @@ class Review(models.Model):
 # models.py
 
 class Maintainence(models.Model):
-    title = models.CharField(max_length=100)              # Name of the service
-    description = models.TextField()                      # Description
-    icon = models.CharField(max_length=50)               # Store FontAwesome icon name like "faSnowflake"
-    is_active = models.BooleanField(default=True)        # Whether to show this service
+    title = models.CharField(max_length=100,null=True)              # Name of the service
+    description = models.TextField(null=True)                      # Description
+    icon = models.CharField(max_length=50,null=True)               # Store FontAwesome icon name like "faSnowflake"
+    is_active = models.BooleanField(default=True,null=True)        # Whether to show this service
 
     def __str__(self):
         return self.title
