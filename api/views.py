@@ -216,19 +216,38 @@ class ProductSellCreateAPIView(APIView):
 
 
 
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def post_enquiry(request):
-    serializer = ServiceEnquirySerializer(data=request.data)
+# @api_view(["POST"])
+# @permission_classes([AllowAny])
+# def post_enquiry(request):
+#     serializer = ServiceEnquirySerializer(data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(
+#             {"message": "Service enquiry submitted successfully"},
+#             status=status.HTTP_201_CREATED
+#         )
+
+    # return Response(
+    #     serializer.errors,
+    #     status=status.HTTP_400_BAD_REQUEST
+    # )
+
+
+class EnquireAPIView(APIView):
+
+    def post(self,request):
+
+        serializer = ServiceEnquirySerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "Service enquiry submitted successfully"},
+                status=status.HTTP_201_CREATED
+            )
+
         return Response(
-            {"message": "Service enquiry submitted successfully"},
-            status=status.HTTP_201_CREATED
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
         )
-
-    return Response(
-        serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST
-    )
