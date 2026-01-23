@@ -17,10 +17,10 @@ urlpatterns = [
     path('reviews/', ReviewsAPIView.as_view()),
     path("contact/", ContactAPIView.as_view(), name="contact-api"),
     path('ac-filter-list/', ACView.as_view(), name='ac-list'),
-    path('post-enquiry/', BookServiceView.as_view()),
+    # path('post-enquiry/', BookServiceView.as_view()),
     path('products-acs/', ProductACAPIView.as_view()),
     path("product-sell-create/", ProductSellCreateAPIView.as_view()),
-
+    path("post-enquiry/", post_enquiry, name="post-enquiry"),
 
 
 

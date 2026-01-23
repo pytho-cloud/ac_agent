@@ -151,3 +151,14 @@ class ProductSellImages(models.Model):
     product = models.ForeignKey(ProductSell, on_delete=models.CASCADE, related_name="images")
     images = models.ImageField(upload_to="product-sell/")
     images_created_at = models.DateTimeField(auto_now_add=True)
+
+
+class ServiceEnquiry(models.Model):
+    full_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField(blank=True, null=True)
+    service_requirements = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

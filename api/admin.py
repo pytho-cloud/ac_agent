@@ -91,3 +91,6 @@ class ProductSellAdmin(admin.ModelAdmin):
     inlines = [ProductSellImagesInline]
 
 
+@admin.register(ServiceEnquiry)
+class ServiceEnquiryAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "phone_number", "email", "created_at")

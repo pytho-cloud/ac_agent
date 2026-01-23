@@ -18,7 +18,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import *
 from .serializers import *
 from .serializers import ReviewsSerializer
-
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from .serializers import ServiceEnquirySerializer
 
 class ACListAPIView(APIView):
     def get(self, request):
@@ -178,16 +180,16 @@ class ACView(APIView):
 
         
 
-class BookServiceView(APIView):
+# class BookServiceView(APIView):
 
-    def post(self, request):
-        serializer = BookServiceSerializer(data=request.data)
+#     def post(self, request):
+#         serializer = BookServiceSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Saved"}, status=201)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({"message": "Saved"}, status=201)
 
-        return Response(serializer.errors, status=400)
+#         return Response(serializer.errors, status=400)
 
 
 
@@ -211,3 +213,22 @@ class ProductSellCreateAPIView(APIView):
             }, status=201)
 
         return Response(serializer.errors, status=400)
+
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def post_enquiry(request):
+    serializer = ServiceEnquirySerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            {"message": "Service enquiry submitted successfully"},
+            status=status.HTTP_201_CREATED
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )

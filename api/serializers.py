@@ -1,6 +1,8 @@
 # serializers.py
 from rest_framework import serializers
 from .models import *
+from rest_framework.decorators import api_view
+
 
 class ACImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,3 +56,16 @@ class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = "__all__"
+        
+        
+        
+        
+class ServiceEnquirySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceEnquiry
+        fields = [
+            "full_name",
+            "phone_number",
+            "email",
+            "service_requirements"
+        ]
