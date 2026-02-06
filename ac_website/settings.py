@@ -29,13 +29,15 @@ ALLOWED_HOSTS = [
     "cooltechservice.net",
     "www.cooltechservice.net",
     "d2qck9p4j5v4q.cloudfront.net",
-    'api.cooltechservice.net',  # <- add this
+    'api.cooltechservice.net', 
+      # <- add this
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "https://cooltechservice.net",
     "https://www.cooltechservice.net",
      "http://localhost:3000",
+     
 ]
 
 # Application definition
@@ -49,11 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'django_filters',
     'corsheaders',
-
+    'import_export',
     'api',   # your app
 ]
 
@@ -192,27 +193,27 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-#DATABASES = {
-    #'default': {
-   #     'ENGINE': 'django.db.backends.sqlite3',
-  #      'NAME': BASE_DIR / 'db.sqlite3',
- #   }
-#}
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ac_agent',            # Your database name
-        'USER': 'ac_user',             # Your MySQL user
-        'PASSWORD': 'ac_user@1234',    # Your MySQL password
-        'HOST': 'localhost',           # MySQL host
-        'PORT': '3306',                # Default MySQL port
-        'OPTIONS': {
-            'charset': 'utf8mb4',      # Ensure full unicode support
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ac_agent',            # Your database name
+#         'USER': 'ac_user',             # Your MySQL user
+#         'PASSWORD': 'ac_user@1234',    # Your MySQL password
+#         'HOST': 'localhost',           # MySQL host
+#         'PORT': '3306',                # Default MySQL port
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',      # Ensure full unicode support
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -242,8 +243,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'rajnepale25@gmail.com'
-EMAIL_HOST_PASSWORD = 'vyclullmnpcadgyx'
+EMAIL_HOST_USER = 'cooltechservices0226@gmail.com'
+EMAIL_HOST_PASSWORD = 'kcttqcquvfogryhy'
+DEFAULT_FROM_EMAIL = "cooltechservices0226@gmail.com"
 
 LANGUAGE_CODE = 'en-us'
 

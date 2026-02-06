@@ -21,7 +21,7 @@ from .serializers import ReviewsSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ServiceEnquirySerializer
-
+from .email import *
 class ACListAPIView(APIView):
     def get(self, request):
         new_ac = AC.objects.filter(is_available=True, is_home_active=True, condition="new")
@@ -110,7 +110,7 @@ class ReviewsAPIView(APIView):
 
             if serializer.is_valid():
                 serializer.save(is_active=False)  # admin approval system
-
+                send_mail_after_enquirey_form(email)
                 return Response(
                     {
                         "message": "Review submitted successfully. Waiting for approval.",
@@ -154,6 +154,13 @@ class ContactAPIView(APIView):
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            name = serializer.validated_data.get("name")
+            email = serializer.validated_data.get("email")
+            message = serializer.validated_data.get("message")
+
+            send_mail_for_contact_form(email, name, message)
+            send_mail_to_owner_for_contact(email, name, message,contact=True)
+            # send_mail_for_contact_form(email,name,message)
             return Response({"message": "Contact form submitted successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -200,6 +207,12 @@ class ProductSellCreateAPIView(APIView):
 
         if serializer.is_valid():
             product = serializer.save()
+            name = serializer.validated_data.get("name")
+            print(name ,"ddddddddddd")
+            
+            # email = serializer['name']
+
+            send_mail_to_owner_for_contact(name=name,sell_product=True)
 
             images = request.FILES.getlist('images')
             for img in images:
@@ -242,6 +255,12 @@ class EnquireAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            name = serializer.validated_data.get("full_name")
+            email = serializer.validated_data.get("email")
+            # message = serializer.validated_data.get("message")
+            send_mail_after_enquirey_form(email,name)
+            send_mail_to_owner_for_contact(name,email,bookservice=True)
+            
             return Response(
                 {"message": "Service enquiry submitted successfully"},
                 status=status.HTTP_201_CREATED

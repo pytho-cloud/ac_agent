@@ -20,6 +20,7 @@ urlpatterns = [
     # path('post-enquiry/', BookServiceView.as_view()),
     path('products-acs/', ProductACAPIView.as_view()),
     path("product-sell-create/", ProductSellCreateAPIView.as_view()),
-    path("post-enquiry/", EnquireAPIView, name="post-enquiry"),
+   path("post-enquiry/", EnquireAPIView.as_view(), name="post-enquirys"),
+
 
 ]
