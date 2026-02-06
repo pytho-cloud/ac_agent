@@ -15,18 +15,24 @@ class ACImageInline(admin.TabularInline):
     model = ACImage
     extra = 3
 
-
 @admin.register(AC)
 class ACAdmin(admin.ModelAdmin):
-    inlines = [ACImageInline]
     list_display = (
-        'brand', 'model_name', 'ac_types',
-        'capacity', 'energy_rating', 'price',
-        'is_available', 'is_home_active'
+        'brand',
+        'model_name',
+        'ac_types_display',  # custom display method
+        'capacity',
+        'energy_rating',
+        'price',
+        'is_available',
+        'is_home_active',
     )
 
-
-
+    def ac_types_display(self, obj):
+        # Convert list to string
+        return ", ".join(obj.ac_types) if obj.ac_types else "-"
+    
+    ac_types_display.short_description = "AC Types"
 # @admin.register(Review)
 # class ReviewAdmin(admin.ModelAdmin):
 #     list_display = (

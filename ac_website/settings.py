@@ -25,12 +25,19 @@ SECRET_KEY = 'django-insecure-=oybsf3ns6qnm-ekty7i2ighjl7zvz(j#ihp(mw&u$5jqv%-e5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = [
+    "cooltechservice.net",
+    "www.cooltechservice.net",
+    "d2qck9p4j5v4q.cloudfront.net",
+    'api.cooltechservice.net',  # <- add this
+]
 
 CORS_ALLOWED_ORIGINS = [
-      "http://localhost:3000",
-     "http://192.168.0.108:3000"
+    "https://cooltechservice.net",
+    "https://www.cooltechservice.net",
+     "http://localhost:3000",
 ]
-ALLOWED_HOSTS = ["*"]
+
 # Application definition
 INSTALLED_APPS = [
     # 'material.admin',  <- REMOVE this line
@@ -185,13 +192,27 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+#DATABASES = {
+    #'default': {
+   #     'ENGINE': 'django.db.backends.sqlite3',
+  #      'NAME': BASE_DIR / 'db.sqlite3',
+ #   }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ac_agent',            # Your database name
+        'USER': 'ac_user',             # Your MySQL user
+        'PASSWORD': 'ac_user@1234',    # Your MySQL password
+        'HOST': 'localhost',           # MySQL host
+        'PORT': '3306',                # Default MySQL port
+        'OPTIONS': {
+            'charset': 'utf8mb4',      # Ensure full unicode support
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -234,22 +255,19 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+# URL for static files
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']  # ← Add this folder
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+# Source static files (your app-level or custom static)
+STATICFILES_DIRS = [BASE_DIR / 'static']  
 
+# Where collectstatic copies all files for production (Nginx reads this)
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
+
+# Media (uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Django default primary key type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
-
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Use pathlib BASE_DIR
