@@ -94,11 +94,11 @@ class Maintainence(models.Model):
 
 
 class Reviews(models.Model):
-    name = models.CharField(max_length=255)
-    product_name = models.CharField(max_length=255,null=True)
-    review = models.TextField()
-    rating = models.IntegerField(choices=STAR_CHOICES)
-    image = models.ImageField(upload_to='review/images')
+    name = models.CharField(max_length=255,null=True,blank=True)
+    product_name = models.CharField(max_length=255,null=True,blank=True)
+    review = models.TextField(null=True,blank=True)
+    rating = models.IntegerField(choices=STAR_CHOICES,null=True,blank=True)
+    image = models.ImageField(upload_to='review/images' ,null=True,blank=True)
     is_active = models.BooleanField(default=False)
 
 

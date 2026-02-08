@@ -107,10 +107,16 @@ def send_mail_to_owner_for_contact(name, email="", message="",contact = False,bo
 
 
 
-def send_mail_to_owner_for_bookservice(full_name, phone_number, email, service_requirements):
-    subject = "New Book Service Form Submission"
+def send_mail_to_owner_for_bookservice(
+    full_name,
+    phone_number,
+    email,
+    service_requirements
+):
+    subject = "📚 New Book Service Request"
 
-    body = f"""
+    # Plain text fallback
+    text_body = f"""
 New Book Service Request
 
 Name: {full_name}
@@ -119,14 +125,41 @@ Phone Number: {phone_number}
 
 Service Requirements:
 {service_requirements}
-""".strip()
+"""
+
+    # HTML email design
+    html_body = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 25px; border-radius: 8px;">
+            
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                New Book Service Request
+            </h2>
+
+            <p><strong>Name:</strong> {full_name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Phone Number:</strong> {phone_number}</p>
+
+            <hr style="border: none; border-top: 1px solid #eee;">
+
+            <p><strong>Service Requirements:</strong></p>
+            <p style="white-space: pre-line;">{service_requirements}</p>
+
+       
+        </div>
+    </body>
+    </html>
+    """
 
     send_mail(
+     
         subject,
-        body,
+        text_body,
         settings.DEFAULT_FROM_EMAIL,
         ["cooltechservices0226@gmail.com"],  # Owner email
         fail_silently=False,
+        html_message=html_body,
     )
 
 
@@ -139,26 +172,113 @@ def send_mail_to_owner_for_productsell(
     phone_number,
     price
 ):
-    subject = "New Product Sell Request"
+    subject = "🛒 New Product Sell Request"
 
-    body = f"""
-New Product Sell Form Submission
+    text_body = f"""
+New Product Sell Request
 
 Name: {name}
 Address: {address}
-
 Product Name: {product_name}
-Description:
-{description}
-
+Description: {description}
 Phone Number: {phone_number}
 Expected Price: {price}
-""".strip()
+"""
+
+    html_body = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 25px; border-radius: 8px;">
+            
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                New Product Sell Request
+            </h2>
+
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Address:</strong> {address}</p>
+
+            <hr style="border: none; border-top: 1px solid #eee;">
+
+            <p><strong>Product Name:</strong> {product_name}</p>
+            <p><strong>Description:</strong><br>{description}</p>
+
+            <hr style="border: none; border-top: 1px solid #eee;">
+
+            <p><strong>Phone Number:</strong> {phone_number}</p>
+            <p><strong>Expected Price:</strong> ₹{price}</p>
+
+         
+        </div>
+    </body>
+    </html>
+    """
 
     send_mail(
         subject,
-        body,
+        text_body,
         settings.DEFAULT_FROM_EMAIL,
-        ["cooltechservices0226@gmail.com"],  # Owner email
+        ["cooltechservices0226@gmail.com"],
         fail_silently=False,
+        html_message=html_body,
     )
+
+
+
+
+def send_mail_for_review_to_owner(name, rating):
+    subject = "New Review Form Submission"
+
+    text_body = f"""
+    Hello,
+
+    You have received a new review submission.
+
+    Reviewer Name: {name}
+    Rating: {rating} ⭐
+
+    Please check your admin panel for more details.
+
+    Regards,
+    CoolTech Services Team
+    """
+
+    html_body = f"""
+    <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f6f9fc;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 8px;">
+            <h2 style="color: #2c3e50; text-align: center;">📩 New Review Received</h2>
+            <p>Hello,</p>
+
+            <p>You have received a new review submission:</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Reviewer Name</strong></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{name}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>Rating</strong></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{rating} ⭐</td>
+                </tr>
+            </table>
+
+            <p>Please check your admin dashboard for full details.</p>
+
+            <p style="margin-top: 30px;">
+                Regards,<br>
+                <strong>CoolTech Services Team</strong>
+            </p>
+        </div>
+    </div>
+    """
+
+    send_mail(
+        subject,
+        text_body,
+        settings.DEFAULT_FROM_EMAIL,
+        ["cooltechservices0226@gmail.com"],
+        fail_silently=False,
+        html_message=html_body,
+    )
+
+
+

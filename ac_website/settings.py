@@ -29,7 +29,8 @@ ALLOWED_HOSTS = [
     "cooltechservice.net",
     "www.cooltechservice.net",
     "d2qck9p4j5v4q.cloudfront.net",
-    'api.cooltechservice.net', 
+    'api.cooltechservice.net',
+    "localhost:3000"
       # <- add this
 ]
 
@@ -66,18 +67,17 @@ JAZZMIN_SETTINGS = {
     # -------------------
     "site_title": "CoolTech Admin",
     "site_header": "CoolTech Services",
-    "site_brand": "CoolTech Admin ",
-    "site_logo": "images/logoo.png",  # put logo in static/images/
-
-    "login_logo": None,
+    "site_brand": "CoolTech Admin",
+    "site_logo": "images/logoo.png",
+    "login_logo": "images/logoo.png",   # Logo on login page
     "login_logo_dark": None,
-    "site_icon": None,
+    "site_icon": "images/logoo.png",    # Browser favicon
 
     # -------------------
     # Welcome Text
     # -------------------
-    "welcome_sign": "Welcome to CoolTech Services",
-    "copyright": "CoolTech Services",
+    "welcome_sign": "Welcome to CoolTech Dashboard",
+    "copyright": "© 2026 CoolTech Services",
 
     # -------------------
     # Search
@@ -95,6 +95,8 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
+        {"name": "Book Services", "url": "/admin/bookservice/", "icon": "fas fa-book"},
+        {"name": "Product Sell", "url": "/admin/productsell/", "icon": "fas fa-box"},
     ],
 
     # -------------------
@@ -104,6 +106,7 @@ JAZZMIN_SETTINGS = {
     "navigation_expanded": True,
     "hide_apps": [],
     "hide_models": [],
+    "related_modal_active": True,
 
     # -------------------
     # Icons (FontAwesome)
@@ -112,19 +115,20 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-
         "home.Property": "fas fa-building",
         "home.Appoinment": "fas fa-calendar-check",
+        "bookservice.BookService": "fas fa-book",
+        "productsell.ProductSell": "fas fa-box",
     },
 
     # -------------------
     # UI Tweaks
     # -------------------
-    "related_modal_active": True,
     "custom_css": "css/admin_custom.css",
     "custom_js": None,
     "use_google_fonts_cdn": True,
     "show_ui_builder": True,
+    "theme": "darkly",  # Optional: bootstrap-dark theme
 }
 
 

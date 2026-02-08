@@ -22,6 +22,12 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ServiceEnquirySerializer
 from .email import *
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+from .email import *
+
+
 class ACListAPIView(APIView):
     def get(self, request):
         new_ac = AC.objects.filter(is_available=True, is_home_active=True, condition="new")
@@ -106,23 +112,38 @@ class ReviewsAPIView(APIView):
     # POST new review
     def post(self, request):
         try:
-            serializer = ReviewsSerializer(data=request.data)
+            data = request.data 
+            print(data,"this is my data ")
 
-            if serializer.is_valid():
-                serializer.save(is_active=False)  # admin approval system
-                send_mail_after_enquirey_form(email)
+            name = data.get("name")
+            product_name = data.get("product_name")
+            review = data.get("review")
+            rating = data.get("rating")
+            image = request.FILES.get("image")
+            print(name,'ssssss')
+            if not review or not rating:
                 return Response(
-                    {
-                        "message": "Review submitted successfully. Waiting for approval.",
-                        "data": serializer.data,
-                        "status": 201
-                    },
-                    status=status.HTTP_201_CREATED
+                    {"error": "Review and rating are required"},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
+            obj = Reviews.objects.create(
+                name=name,
+                product_name=product_name,
+                review=review,
+                rating=rating,
+                image=image,
+                is_active=False  # admin approval system
+            )
+
+            send_mail_for_review_to_owner(review, rating)
+
             return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
+                {
+                    "message": "Review submitted successfully. Waiting for approval.",
+                    "status": 201
+                },
+                status=status.HTTP_201_CREATED
             )
 
         except Exception as e:
@@ -130,25 +151,6 @@ class ReviewsAPIView(APIView):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-    def get(self, request):
-        try:
-            print()
-            response = list(Reviews.objects.filter(is_active = True).values())
-            print(response,"sssssssssss")
-            return Response(
-                {"data": response, "status": 200},
-                status=status.HTTP_200_OK
-            )
-
-        except Exception as e:
-            print(e)
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-
 class ContactAPIView(APIView):
     def post(self, request):
         serializer = ContactSerializer(data=request.data)
@@ -280,3 +282,9 @@ class EnquireAPIView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+@csrf_exempt
+def get_logout(request):
+    logout(request)
+    return redirect('/admin/login/')
