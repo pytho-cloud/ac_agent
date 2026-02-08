@@ -208,11 +208,18 @@ class ProductSellCreateAPIView(APIView):
         if serializer.is_valid():
             product = serializer.save()
             name = serializer.validated_data.get("name")
-            print(name ,"ddddddddddd")
+            address = serializer.validated_data.get("address")
+            product_name = serializer.validated_data.get("product_name")
+            description = serializer.validated_data.get("description")
+            phone_number = serializer.validated_data.get("phone_number")
+            price = serializer.validated_data.get("price")
+
+
+            # print(name ,"ddddddddddd")
             
             # email = serializer['name']
 
-            send_mail_to_owner_for_contact(name=name,sell_product=True)
+            send_mail_to_owner_for_productsell(name,address,product_name,description,phone_number,price)
 
             images = request.FILES.getlist('images')
             for img in images:
@@ -255,11 +262,14 @@ class EnquireAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            name = serializer.validated_data.get("full_name")
+            full_name = serializer.validated_data.get("full_name")
+            phone_number = serializer.validated_data.get("phone_number")
+            service_requirements = serializer.validated_data.get("service_requirements")
             email = serializer.validated_data.get("email")
+
             # message = serializer.validated_data.get("message")
-            send_mail_after_enquirey_form(email,name)
-            send_mail_to_owner_for_contact(name,email,bookservice=True)
+            send_mail_after_enquirey_form(email,full_name)
+            send_mail_to_owner_for_bookservice(full_name,phone_number,email,service_requirements)
             
             return Response(
                 {"message": "Service enquiry submitted successfully"},

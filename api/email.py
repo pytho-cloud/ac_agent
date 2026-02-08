@@ -104,3 +104,61 @@ def send_mail_to_owner_for_contact(name, email="", message="",contact = False,bo
         ["cooltechservices0226@gmail.com"],  # OWNER EMAIL
         fail_silently=False,
     )
+
+
+
+def send_mail_to_owner_for_bookservice(full_name, phone_number, email, service_requirements):
+    subject = "New Book Service Form Submission"
+
+    body = f"""
+New Book Service Request
+
+Name: {full_name}
+Email: {email}
+Phone Number: {phone_number}
+
+Service Requirements:
+{service_requirements}
+""".strip()
+
+    send_mail(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        ["cooltechservices0226@gmail.com"],  # Owner email
+        fail_silently=False,
+    )
+
+
+
+def send_mail_to_owner_for_productsell(
+    name,
+    address,
+    product_name,
+    description,
+    phone_number,
+    price
+):
+    subject = "New Product Sell Request"
+
+    body = f"""
+New Product Sell Form Submission
+
+Name: {name}
+Address: {address}
+
+Product Name: {product_name}
+Description:
+{description}
+
+Phone Number: {phone_number}
+Expected Price: {price}
+""".strip()
+
+    send_mail(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        ["cooltechservices0226@gmail.com"],  # Owner email
+        fail_silently=False,
+    )
